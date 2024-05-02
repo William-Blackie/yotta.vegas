@@ -62,6 +62,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    # Whitenoise middleware is used to serve static files (CSS, JS, etc.).
+    # According to the official documentation it should be listed underneath
+    # SecurityMiddleware.
+    # http://whitenoise.evans.io/en/stable/#quickstart-for-django-apps
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -147,6 +152,9 @@ if "SECRET_KEY" in ENV:
 if "ALLOWED_HOSTS" in ENV:
     ALLOWED_HOSTS = ENV["ALLOWED_HOSTS"].split(",")
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -156,16 +164,15 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static_compiled"),
 ]
 
-
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
 
 
 # Search

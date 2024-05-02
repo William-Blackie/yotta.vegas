@@ -73,7 +73,7 @@ RUN chown wagtail:wagtail /app -R && chown wagtail:wagtail /home/wagtail -R
 # Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail . .
 COPY --from=frontend ./yotta/static_compiled ./yotta/static_compiled
-RUN ls -al .
+
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
