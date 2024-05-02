@@ -11,5 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new CookiePolicy()
   }
 
+
   ConsoleMessage()
 })

@@ -30,7 +30,8 @@ class Menu {
         let nextElement = element.nextElementSibling
         let svg = element.querySelector('svg')
         svg.classList.toggle('rotate-180')
-        svg.classList.toggle('bg-brand-purple')
+        element.classList.toggle('bg-brand-purple')
+      
         nextElement.classList.toggle(this.invisibleClass)
         if (nextElement.classList.contains(this.invisibleClass)) {
           nextElement.classList.remove(
@@ -82,6 +83,9 @@ class Menu {
         let svg = element.querySelector('svg')
 
         svg.classList.toggle('rotate-180')
+        svg.classList.toggle('text-brand-purple')
+        svg.classList.toggle('text-gray-400')
+
         nextElement.classList.toggle(this.invisibleClass)
         element.classList.toggle('text-white')
         element.classList.toggle('text-brand-purple')
@@ -123,10 +127,10 @@ class Menu {
             !element.contains(event.target)
           ) {
             let svg = element.querySelector('svg')
+            // rest to defaults
+            svg.classList = 'h-5 w-5 flex-none text-gray-400 group-hover:text-brand-purple'
+            element.classList = 'group hover:text-brand-purple flex items-center gap-x-1 text-sm font-semibold leading-6 text-white'
 
-            svg.classList.toggle('rotate-180')
-            element.classList.toggle('text-white')
-            element.classList.toggle('text-brand-purple')
             nextElement.classList.toggle(this.invisibleClass)
             nextElement.classList.add(this.invisibleClass)
           }

@@ -35,6 +35,9 @@ module.exports = {
                 "brand-purple": "#7231FF",
                 "brand-green": "#66FF58",
             },
+            animation: {
+                "marquee": "marquee 250s linear infinite",
+            },  
         },
     },
     plugins: [],

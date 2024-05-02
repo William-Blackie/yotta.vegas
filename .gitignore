@@ -130,6 +130,6 @@ dmypy.json
 
 
 # Compiled
-website/static_compiled/
+yotta/static_compiled/
 media
 node_modules/
