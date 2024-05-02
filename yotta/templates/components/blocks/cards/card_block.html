@@ -1,0 +1,27 @@
+{% load wagtailimages_tags wagtailcore_tags %}
+<a class="flex flex-col" href="{{ value.link.url }}">
+  <div
+    class="rounded-3xl bg-white p-4 shadow-2xl transition delay-100 ease-in-out hover:-translate-y-1 hover:opacity-80"
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2">
+      <div class="max-w-none">
+        <picture class="rounded-2xl">
+          {% image value.image fill-320x320 format-webp as image_webp %}
+          <source srcset="{{ image_webp.url }}" type="image/webp" />
+          {% image value.image fill-320x320 format-png as image_png %}
+          <source srcset="{{ image_png.url }}" type="image/png" />
+          {% image value.image fill-320x320 format-png class="w-full h-auto
+          sm:w-auto"%}
+        </picture>
+      </div>
+      <div class="ml-3 max-w-md flex-auto py-2">
+        <div>
+          <p class="flex-auto text-lg font-medium text-indigo-600">
+            {{ value.title }}
+          </p>
+          {{ value.text|richtext }}
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

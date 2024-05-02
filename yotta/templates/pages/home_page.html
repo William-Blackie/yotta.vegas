@@ -1,0 +1,199 @@
+{% extends "pages/base_page.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+  {% include_block page.body %}
+
+  <div class="col-span-10 col-start-1 bg-black lg:col-start-2">
+    <div
+      class="mx-auto grid grid-cols-1 rounded-2xl drop-shadow-2xl md:grid-cols-2"
+    >
+      <div class="flex w-3/4 flex-col justify-between px-5 md:p-10">
+        <h1 class="text-2xl font-bold text-white md:text-4xl lg:text-6xl">
+          HOW WILL DIGITAL INFRASTRUCTURE
+          <span class="text-brand-purple">MEET THE DEMANDS OF AI?</span>
+        </h1>
+        <p class="mt-2 text-lg text-white md:text-xl lg:text-2xl">
+          Join us in Las Vegas on October 7-9 for an epic large-scale show
+          exploring where this trillion dollar industry goes next...
+        </p>
+      </div>
+      <div class="sm:p-10">
+        <div
+          class="relative mx-auto h-[550px] w-[550px] overflow-hidden border-2 border-white bg-black bg-cover bg-center bg-no-repeat lg:scale-100"
+        >
+          <div class="absolute left-0 right-0 top-[2px] mx-auto w-full">
+            <img
+              class="rotate-anti-clock w-full"
+              src="https://custom-eur.cvent.com/42ADAFD233B74F5BA9900156EA015E51/pix/68d118a9cf524683bff6e8039c43bbaf.png"
+            />
+          </div>
+          <div class="absolute left-0 right-0 top-[45px] mx-auto w-[85%]">
+            <img
+              class="rotate-clock w-full"
+              src="https://custom-eur.cvent.com/42ADAFD233B74F5BA9900156EA015E51/pix/e087d1863bfc4c9faae6f08b6bb00cdd.png"
+            />
+          </div>
+          <div class="absolute left-0 right-0 top-[90px] mx-auto w-[70%]">
+            <img
+              class="rotate-anti-clock w-full"
+              src="https://custom-eur.cvent.com/42ADAFD233B74F5BA9900156EA015E51/pix/2ea1a5c5955c41aeaa7a355b35b78c55.png"
+            />
+          </div>
+          <div class="absolute left-0 right-0 top-[135px] mx-auto w-[55%]">
+            <img
+              class="rotate-clock w-full"
+              src="https://custom-eur.cvent.com/42ADAFD233B74F5BA9900156EA015E51/pix/5b53f79606bc495a867e33eb6af6c1b3.png"
+            />
+          </div>
+          <div
+            class="absolute left-0 right-0 top-[35%] mx-auto w-full max-w-[425px]"
+          >
+            <img
+              src="https://custom-eur.cvent.com/42ADAFD233B74F5BA9900156EA015E51/pix/d0d655315f9c47f69c79f112f4b5b44a.png"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-0 bg-white p-6 pb-10">
+      <div class="mx-auto max-w-6xl">
+        <div class="flex flex-col gap-10">
+          <img
+            class="max-w-full"
+            srcset="
+                    https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?d=320&f=webp  320w,
+                    https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?d=480&f=webp  480w,
+                    https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?d=768&f=webp  768w,
+                    https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?d=992&f=webp  992w,
+                    https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?f=webp       1232w
+                   "
+            src="https://images-eur.cvent.com/pr53/42adafd233b74f5ba9900156ea015e51/pix/6151aafd9b11420a8dd2a609d30299a8!_!315d1e131bf2dadef8e9fc82ca800872.png?f=webp"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-900 py-24 sm:py-32">
+      <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 class="text-center text-lg font-semibold leading-8 text-white">
+          Partners
+        </h2>
+        <div
+          class="marquee absolute mx-auto mt-10 flex grid max-w-lg grid-cols-4 items-center gap-[60px] gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5"
+        >
+          <img
+            class="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+            src="https://tailwindui.com/img/logos/158x48/transistor-logo-white.svg"
+            alt="Transistor"
+            width="158"
+            height="48"
+          />
+          <img
+            class="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+            src="https://tailwindui.com/img/logos/158x48/reform-logo-white.svg"
+            alt="Reform"
+            width="158"
+            height="48"
+          />
+          <img
+            class="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+            src="https://tailwindui.com/img/logos/158x48/tuple-logo-white.svg"
+            alt="Tuple"
+            width="158"
+            height="48"
+          />
+          <img
+            class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1"
+            src="https://tailwindui.com/img/logos/158x48/savvycal-logo-white.svg"
+            alt="SavvyCal"
+            width="158"
+            height="48"
+          />
+          <img
+            class="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
+            src="https://tailwindui.com/img/logos/158x48/statamic-logo-white.svg"
+            alt="Statamic"
+            width="158"
+            height="48"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2"
+        >
+          <div class="mx-auto w-full max-w-xl lg:mx-0">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+              Trusted by the most innovative teams
+            </h2>
+            <p class="mt-6 text-lg leading-8 text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas
+              tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim
+              et fermentum, augue.
+            </p>
+            <div class="mt-8 flex items-center gap-x-6">
+              <a
+                href="#"
+                class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >Create account</a
+                >
+                <a href="#" class="text-sm font-semibold text-gray-900"
+                >Contact us <span aria-hidden="true">&rarr;</span></a
+                  >
+                </div>
+              </div>
+              <div
+                class="mx-auto grid w-full max-w-xl grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8"
+              >
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/tuple-logo-gray-900.svg"
+                  alt="Tuple"
+                  width="105"
+                  height="48"
+                />
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/reform-logo-gray-900.svg"
+                  alt="Reform"
+                  width="104"
+                  height="48"
+                />
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/savvycal-logo-gray-900.svg"
+                  alt="SavvyCal"
+                  width="140"
+                  height="48"
+                />
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/laravel-logo-gray-900.svg"
+                  alt="Laravel"
+                  width="136"
+                  height="48"
+                />
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/transistor-logo-gray-900.svg"
+                  alt="Transistor"
+                  width="158"
+                  height="48"
+                />
+                <img
+                  class="max-h-12 w-full object-contain object-left"
+                  src="https://tailwindui.com/img/logos/statamic-logo-gray-900.svg"
+                  alt="Statamic"
+                  width="147"
+                  height="48"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock content %}
+</div>
