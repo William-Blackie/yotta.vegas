@@ -10,48 +10,42 @@ RUN pnpm install && pnpm run build
 
 
 # Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.12.2-bullseye as backend
+FROM python:3.12.2-bullseye as production
 
-# Add user that will be used in the container.
-RUN useradd wagtail
+ARG POETRY_INSTALL_ARGS="--only main"
 
-# Port used by this container to serve HTTP.
-EXPOSE 8000
+# IMPORTANT: Remember to review both of these when upgrading
+ARG POETRY_VERSION=1.5.1
+
+# Install dependencies in a virtualenv
+ENV VIRTUAL_ENV=/venv
+
+RUN useradd wagtail --create-home && mkdir /app $VIRTUAL_ENV && chown -R wagtail /app $VIRTUAL_ENV
+
+WORKDIR /app
 
 # Set environment variables.
 # 1. Force Python stdout and stderr streams to be unbuffered.
 # 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
 #    command.
-ENV PYTHONUNBUFFERED=1 \
-    PORT=8000
+ENV PATH=$VIRTUAL_ENV/bin:$PATH \
+    POETRY_INSTALL_ARGS=${POETRY_INSTALL_ARGS} \
+    PYTHONUNBUFFERED=1 \
+    DJANGO_SETTINGS_MODULE=yotta.settings.production \
+    PORT=8000 \
+    WEB_CONCURRENCY=3 \
+    GUNICORN_CMD_ARGS="-c gunicorn-conf.py --max-requests 1200 --max-requests-jitter 50 --access-logfile - --timeout 25"
 
-# Install system packages required by Wagtail and Django.
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    libmariadb-dev \
-    libjpeg62-turbo-dev \
-    zlib1g-dev \
-    libwebp-dev \
-    gnupg2 \
-    && rm -rf /var/lib/apt/lists/*
+# Make $BUILD_ENV available at runtime
+ARG BUILD_ENV
+ENV BUILD_ENV=${BUILD_ENV}
 
-# Purge old postgresql packages.
-RUN apt-get purge -y postgresql\*
+# Port exposed by this container. Should default to the port used by your WSGI
+# server (Gunicorn). This is read by Dokku only. Heroku will ignore this.
+EXPOSE 8000
 
-RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
-RUN echo "deb https://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update && apt-get install -y postgresql-client-16
-
-# Configure Poetry
-ENV POETRY_HOME="/opt/poetry" \
-    POETRY_VERSION=1.3.2
-
-# Add `poetry` to PATH
-ENV PATH="$POETRY_HOME/bin:$PATH"
-
-RUN curl -sSL https://install.python-poetry.org | POETRY_VERSION=${POETRY_VERSION} python3 - \
-    && chmod 755 ${POETRY_HOME}/bin/poetry
+# Install poetry at the system level
+RUN pip install --no-cache poetry==${POETRY_VERSION}
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
@@ -59,37 +53,30 @@ WORKDIR /app
 # Add bash commands
 COPY scripts/bash.sh /home/wagtail/.bashrc
 
-# Install dependencies
-COPY poetry.lock pyproject.toml ./
+# Install your app's Python requirements.
+RUN python -m venv $VIRTUAL_ENV
+COPY --chown=wagtail pyproject.toml poetry.lock ./
+RUN pip install --no-cache --upgrade pip && poetry install ${POETRY_INSTALL_ARGS} --no-root --extras gunicorn && rm -rf $HOME/.cache
 
-RUN /bin/true\
-    && poetry config virtualenvs.create false \
-    && poetry install --no-interaction \
-    && rm -rf /root/.cache/pypoetry
+COPY --chown=wagtail --from=frontend ./yotta/static_compiled ./yotta/static_compiled
 
-# Set this directory to be owned by the "wagtail" user. 
-RUN chown wagtail:wagtail /app -R && chown wagtail:wagtail /home/wagtail -R
+# Copy application code.
+COPY --chown=wagtail . .
 
-# Copy the source code of the project into the container.
-COPY --chown=wagtail:wagtail . .
-COPY --from=frontend ./yotta/static_compiled ./yotta/static_compiled
+# Run poetry install again to install our project (so the the wagtail package is always importable)
+RUN poetry install ${POETRY_INSTALL_ARGS}
 
-# Use user "wagtail" to run the build commands below and the server itself.
-USER wagtail
+RUN SECRET_KEY=none python manage.py collectstatic --noinput --clear
 
-# Collect static files.
-RUN python manage.py collectstatic --noinput --clear
+# Run the WSGI server. It reads GUNICORN_CMD_ARGS, PORT and WEB_CONCURRENCY
+# environment variable hence we don't specify a lot options below.
+CMD gunicorn yotta.wsgi:application
 
-# Install the application server.
-RUN pip install "gunicorn==20.0.4"
+FROM production as development
 
-# Runtime command that executes when "docker run" is called, it does the
-# following:
-#   1. Migrate the database.
-#   2. Start the application server.
-# WARNING:
-#   Migrating database at the same time as starting the server IS NOT THE BEST
-#   PRACTICE. The database should be migrated manually or using the release
-#   phase facilities of your hosting platform. This is used only so the
-#   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn yotta.wsgi:application
+# Install `psql`, useful for `manage.py dbshell`
+RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+    postgresql-client jpegoptim pngquant gifsicle libjpeg-progs webp \
+    && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+
+CMD tail -f /dev/null
