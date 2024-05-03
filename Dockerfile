@@ -10,7 +10,7 @@ RUN pnpm install && pnpm run build
 
 
 # Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.12.2-bullseye as production
+FROM python:3.12.2 as production
 
 ARG POETRY_INSTALL_ARGS="--only main"
 
@@ -24,10 +24,21 @@ RUN useradd wagtail --create-home && mkdir /app $VIRTUAL_ENV && chown -R wagtail
 
 WORKDIR /app
 
-# Set environment variables.
-# 1. Force Python stdout and stderr streams to be unbuffered.
-# 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
-#    command.
+# If you specify your own environment variables on Heroku or Dokku, they will
+# override the ones set here. The ones below serve as sane defaults only.
+#  * PATH - Make sure that Poetry is on the PATH, along with our venv
+#  * PYTHONUNBUFFERED - This is useful so Python does not hold any messages
+#    from being output.
+#    https://docs.python.org/3.9/using/cmdline.html#envvar-PYTHONUNBUFFERED
+#    https://docs.python.org/3.9/using/cmdline.html#cmdoption-u
+#  * DJANGO_SETTINGS_MODULE - default settings used in the container.
+#  * PORT - default port used. Please match with EXPOSE so it works on Dokku.
+#    Heroku will ignore EXPOSE and only set PORT variable. PORT variable is
+#    read/used by Gunicorn.
+#  * WEB_CONCURRENCY - number of workers used by Gunicorn. The variable is
+#    read by Gunicorn.
+#  * GUNICORN_CMD_ARGS - additional arguments to be passed to Gunicorn. This
+#    variable is read by Gunicorn
 ENV PATH=$VIRTUAL_ENV/bin:$PATH \
     POETRY_INSTALL_ARGS=${POETRY_INSTALL_ARGS} \
     PYTHONUNBUFFERED=1 \
@@ -46,6 +57,9 @@ EXPOSE 8000
 
 # Install poetry at the system level
 RUN pip install --no-cache poetry==${POETRY_VERSION}
+
+# Set user
+USER wagtail
 
 # Use /app folder as a directory where the source code is stored.
 WORKDIR /app
@@ -74,9 +88,16 @@ CMD gunicorn yotta.wsgi:application
 
 FROM production as development
 
+# Install development dependencies
+USER root
+
 # Install `psql`, useful for `manage.py dbshell`
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     postgresql-client jpegoptim pngquant gifsicle libjpeg-progs webp \
     && apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
+# Switch back to wagtail user
+USER wagtail
+
+# # do nothing forever - exec commands elsewhere
 CMD tail -f /dev/null
