@@ -18,12 +18,12 @@ def primarynav(context):
 
 # Footer nav snippets
 @register.inclusion_tag(
-    "components/footer-links.html", takes_context=True
+    "components/footer.html", takes_context=True
 )
-def footerlinks(context):
+def footernav(context):
     request = context["request"]
     return {
-        "footerlinks": context["settings"]["navigation"][
+        "footernav": context["settings"]["navigation"][
             "NavigationSettings"
         ].footer_links,
         "request": request,

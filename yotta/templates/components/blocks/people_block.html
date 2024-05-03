@@ -1,0 +1,19 @@
+{% load wagtailimages_tags %}
+<div class="bg-black py-12 sm:py-16">
+  <div class="mx-auto max-w-6xl p-6 lg:px-8 bg-black lg:col-start-2">
+    <div class="mx-auto flex flex-col items-center">
+      <h2 class="text-6xl font-extrabold uppercase tracking-tight text-white sm:text-4xl" >{{ value.title }}</h2>
+      <p class="mt-6 text-lg leading-8 text-white text-center">{{ value.intro }}</p>
+    </div>
+    <ul role="list" class="mx-auto max-w-3xl mt-20 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {% for person in value.people %}
+        <li class="flex flex-col items-center">
+          {% picture person.image format-{avif,webp,jpeg} fill-160x223 class="rounded-2xl object-cover" %}
+          <h3 class="mt-2 text-lg font-extrabold uppercase tracking-tight text-white">{{ person.name }}</h3>
+          <p class="text-base font-extrabold leading-7 uppercase text-gray-400">{{ person.role }}</p>
+          <p class="text-sm font-extrabold leading-6 uppercase text-white">{{ person.company }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

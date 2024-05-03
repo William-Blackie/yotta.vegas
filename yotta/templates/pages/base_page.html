@@ -3,9 +3,11 @@
 {% block navigation %}
     {% primarynav %}
 {% endblock navigation %}
+
 {% block content %}
 {% endblock content %}
+
 {% block footer %}
     {% include "components/cookie-policy.html" %}
-    {% include "components/footer.html" %}
+    {% footernav %}
 {% endblock footer %}

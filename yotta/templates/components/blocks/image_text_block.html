@@ -1,13 +1,19 @@
 {% load wagtailimages_tags wagtailcore_tags %}
 
-<div class="col-span-10 col-start-1 lg:col-start-2">
-    <div class="grid grid-cols-1 gap-4 m-10 mx-auto md:grid-cols-2 drop-shadow-2xl rounded-2xl">
-        <div class="p-10">
-            {% picture value.image format-{avif,webp,jpeg} width-500 %}
-            {% if value.caption %}<p class="text-base leading-6 text-center text-gray-500">{{ value.caption }}</p>{% endif %}
-        </div>
-        <div class="px-5 md:p-10 {% if value.alignment == "right" %}sm:order-1{% endif %}">
-            {{ value.text|richtext }}
-        </div>
+<div class="mx-auto max-w-6xl bg-white py-12 sm:py-16">
+  <div
+    class="mx-auto grid max-w-6xl grid-cols-1 items-center justify-between gap-4 p-6 lg:grid-cols-2 lg:px-8"
+  >
+    {% srcset_image value.image width-{400,800} sizes="(max-width: 600px) 400px,80vw" class="fit-content h-[480px] mx-auto" %}
+    <div class="flex flex-col">
+      <div class="rich-text mb-6">
+        {{ value.text|richtext }}
+      </div>
+      <a
+        href="https://www.yotta.vegas/event/0579a338-8230-4fd3-a868-09d30fd61b34/regPage:f8e11816-9b4f-4438-a598-a8c7e3c1b7f4"
+        class="inline-block mx-auto mt-2 pt-2 ml-0 rounded-md bg-brand-green px-3.5 py-2.5 text-md font-bold uppercase text-black shadow-sm hover:bg-brand-purple hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green no-underline"
+      >Register</a
+        >
+      </div>
     </div>
-</div>
+  </div>

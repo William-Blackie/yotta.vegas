@@ -22,7 +22,7 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./
+          path: ./yotta/
           target: ./app/
       restart: always
     volumes:

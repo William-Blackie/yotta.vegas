@@ -105,14 +105,6 @@ class ImageTextBlock(blocks.StructBlock):
     """
     image = ImageWithCaptionBlock(required=True)
     text = blocks.RichTextBlock(required=True)
-    alignment = blocks.ChoiceBlock(
-        choices=[
-            ('left', 'Left'),
-            ('right', 'Right'),
-        ],
-        default='left',
-        required=True,
-    )
 
     class Meta:
         icon = 'placeholder'
@@ -137,6 +129,57 @@ class ColorBlock(blocks.StructBlock):
     class Meta:
         value_class = TailwindColorStructValue
 
+class IntroWithTextGridBlock(blocks.StructBlock):
+    """
+    A block for an intro with text grid.
+    """
+    title_start = blocks.CharBlock(required=True)
+    title_middle = blocks.CharBlock(required=True)
+    title_end = blocks.CharBlock(required=True)
+    intro = blocks.RichTextBlock(required=True)
+    text_grid = blocks.ListBlock(
+        blocks.StructBlock([
+            ('heading', blocks.CharBlock(required=True)),
+            ('text', blocks.RichTextBlock(required=True)),
+        ])
+    )
+    class Meta:
+        icon = 'placeholder'
+        template = 'components/blocks/intro_with_text_grid.html'
+
+
+class LogoBlock(blocks.StructBlock):
+    """
+    A block for a list of logos.
+    """
+    title = blocks.CharBlock(required=True)
+    logos = blocks.ListBlock(
+        blocks.StructBlock([
+            ('logo', ImageChooserBlock(required=True)),
+        ])
+    )
+    class Meta:
+        icon = 'placeholder'
+        template = 'components/blocks/logo_block.html'
+
+
+class PeopleBlock(blocks.StructBlock):
+    """
+    A block for a list of people.
+    """
+    title = blocks.CharBlock(required=True)
+    intro = blocks.CharBlock(required=True)
+    people = blocks.ListBlock(
+        blocks.StructBlock([
+            ('name', blocks.CharBlock(required=True)),
+            ('role', blocks.CharBlock(required=True)),
+            ('company', blocks.CharBlock(required=True)),
+            ('image', ImageChooserBlock(required=True)),
+        ])
+    )
+    class Meta:
+        icon = 'placeholder'
+        template = 'components/blocks/people_block.html'
 
 class ContentStreamField(blocks.StreamBlock):
     """"
@@ -148,11 +191,11 @@ class ContentStreamField(blocks.StreamBlock):
     paragraph = blocks.RichTextBlock(
         template="components/blocks/paragraph_block.html"
     )
-    image = ImageWithCaptionBlock()
+    intro_with_text_grid = IntroWithTextGridBlock()
     document = DocumentChooserBlock()
-    code = CodeBlock()
     image_text = ImageTextBlock()
-    cards = CardsBlock()
+    people_block = PeopleBlock()    
+    logo_block = LogoBlock()
     
     class Meta:
         template = 'components/blocks/content.html'

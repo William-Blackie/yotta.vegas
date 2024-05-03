@@ -1,11 +1,11 @@
 {% load static %}
 <header class="bg-black">
   <nav id="menu" class="mx-auto flex max-w-6xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-    <div class="flex lg:flex-1">
+    <div class="flex lg:flex-none">
       <a href="#" class="-m-1.5 p-1.5 flex items-center">
         <span class="sr-only">Yotta</span>
         <img class="h-8 w-auto" src="{% static "images/yotta_logo_small.webp" %}" alt="">
-        <span class="text-brand-purple text-sm font-bold border-l-2 border-brand-purple pl-2"><p>Oct. 7-9 2024</p> <p>MGM Grand, Las Vegas</p></span>
+        <span class="text-brand-purple font-extrabold text-sm border-l-2 border-brand-purple pl-2"><p>Oct. 7-9 2024</p> <p>MGM Grand, Las Vegas</p></span>
       </a>
     </div>
     <div id="open-mobile-menu-button" class="flex lg:hidden">
@@ -17,24 +17,24 @@
       </button>
     </div>
     <!-- Primary nav -->
-    <div class="hidden lg:flex lg:gap-x-12">
+    <div class="hidden lg:flex lg:justify-evenly lg:w-full lg:mx-auto">
       {% for item in primarynav %}
         {% if item.value.children %}
           <div class="relative h-full">
-            <button id="dropdown-button" data-menu-button="{{ forloop.counter }}" type="button" class="group hover:text-brand-purple flex items-center gap-x-1 text-sm font-semibold leading-6 text-white" aria-expanded="false">
+            <button id="dropdown-button" data-menu-button="{{ forloop.counter }}" type="button" class="group hover:text-brand-purple font-extrabold flex items-center gap-x-1 text-sm uppercase leading-6 text-white" aria-expanded="false">
               {{ item.value.title }}
               <svg class="h-5 w-5 flex-none text-gray-400 group-hover:text-brand-purple" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
               </svg>
             </button>
             <!-- Dropdown menu, show/hide based on button state. -->
-            <div id="dropdown-menu" data-menu-dropdown="{{ forloop.counter }}" class="absolute hidden w-max -left-8 top-full z-10 mt-3 max-w-md overflow-hidden rounded-xl shadow-lg bg-white ring-1 ring-gray-900/5">
+            <div id="dropdown-menu" data-menu-dropdown="{{ forloop.counter }}" class="absolute hidden w-max -left-8 top-full z-10 mt-3 max-w-md overflow-hidden rounded-xl shadow-lg bg-brand-purple text-white ring-1 ring-gray-900/5">
               <div class="p-4">
                 <div class="relative flex gap-x-6 rounded-lg p-4 text-sm leading-6">
                   <ul class="flex-auto">
                     {% for child in item.value.children %}
                       <li>
-                        <a href="{{ child.url }}" class="block font-semibold hover:text-brand-purple">
+                        <a href="{{ child.url }}" class="block font-extrabold uppercase hover:text-black">
                           {{ child.text }}
                         </a>
                       </li>
@@ -47,14 +47,14 @@
 
         {% else %}
           <!-- No drop down -->
-          <a href="{{ item.value.link }}" class="text-sm font-semibold leading-6 text-white hover:text-brand-purple">{{ item.value.title }}</a>
+          <a href="{{ item.value.link }}" class="text-sm font-extrabold uppercase leading-6 text-white hover:text-brand-purple">{{ item.value.title }}</a>
         {% endif %}
       {% endfor %}
     </div>
   </div>
 
   <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-    <a href="#" class="rounded-md bg-brand-green px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:text-white hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">Register</a>
+    <a href="https://www.yotta.vegas/event/0579a338-8230-4fd3-a868-09d30fd61b34/regPage:f8e11816-9b4f-4438-a598-a8c7e3c1b7f4" class="bg-brand-green px-3.5 py-2.5 text-sm font-extrabold uppercase text-black shadow-sm hover:text-white hover:bg-brand-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green">Register</a>
   </div>
 </nav>
   <!-- Mobile menu, show/hide based on menu open state. -->

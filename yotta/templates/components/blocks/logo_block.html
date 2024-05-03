@@ -1,0 +1,20 @@
+{% load wagtailimages_tags %}
+<div class="bg-white py-12 sm:py-16">
+  <div class="relative mx-auto max-w-6xl">
+    <h2 class="mb-6 text-center text-3xl font-bold uppercase leading-8">
+      {{ value.title }}
+    </h2>
+    <div
+      class="sided-gradient relative m-0 mx-auto max-w-[80vw] overflow-hidden p-14"
+    >
+      <div
+        class="absolute left-0 top-0 flex w-auto gap-4"
+        style="white-space: nowrap; animation: marquee 250s linear infinite"
+      >
+        {% for item in value.logos %}
+          {% picture item.logo format-{avif,webp,jpeg} fill-158x80 class="w-auto object-contain max-w-none" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

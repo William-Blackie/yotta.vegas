@@ -1,0 +1,16 @@
+<div class="bg-brand-purple py-12 sm:py-16">
+  <div class="mx-auto max-w-6xl p-6 lg:px-8 lg:col-start-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <h2 class="text-6xl font-extrabold uppercase tracking-tight text-white">{{ value.title_start }} <span class="text-brand-green">{{ value.title_middle }}</span> {{ value.title_end }}</h2>
+      <div class="mt6 sm:mt-0 text-md text-white">{{ value.intro }}</div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2: lg:grid-cols-4 pt-10">
+      {% for item in value.text_grid %}
+        <div class="border-white border-2 text-white p-4">
+          <h3 class="font-bold pb-3">{{ item.heading }}</h3>
+          <div class="">{{ item.text }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

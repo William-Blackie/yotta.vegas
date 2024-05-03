@@ -10,8 +10,9 @@ from yotta.utils.blocks import ContentStreamField
 class HomePage(BasePage):
     template = 'pages/home_page.html'
 
-    meta_text = models.CharField(max_length=50, blank=True, null=True)
-    introduction = RichTextField(null=True)
+    title_start = models.CharField(max_length=50, blank=False, default="How will digital infrastructure meet")
+    title_end = models.CharField(max_length=50, blank=False, default="the demands of AI?")
+    intro = models.TextField(default="Join us in Las Vegas on October 7-9 for an epic large-scale show exploring where this trillion dollar industry goes next...")
 
     body = StreamField(
         ContentStreamField(),
@@ -20,8 +21,9 @@ class HomePage(BasePage):
 
     content_panels = BasePage.content_panels + [
         # Hero
-        FieldPanel("meta_text"),
-        FieldPanel("introduction"),
+        FieldPanel("title_start"),
+        FieldPanel("title_end"),
+        FieldPanel("intro"),
         # Content
         FieldPanel("body"),
     ]
