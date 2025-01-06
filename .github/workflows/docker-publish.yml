@@ -25,5 +25,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/William-Blackie/yotta:latest
-            ghcr.io/William-Blackie/yotta:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/yotta:latest
+            ghcr.io/${{ github.repository_owner }}/yotta:${{ github.sha }}
